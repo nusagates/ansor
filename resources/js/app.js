@@ -18,7 +18,7 @@ const vuetify = createVuetify({
     directives,
 })
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Ansor Argomulyo';
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

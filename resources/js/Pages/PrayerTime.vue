@@ -625,6 +625,10 @@ onMounted(() => {
 </script>
 <template>
     <Head title="Jadwal Sholat"/>
+    <inertia-head>
+        <title>Your page title</title>
+        <meta name="description" content="Your page description">
+    </inertia-head>
     <v-app>
         <v-sheet>
             <div>
