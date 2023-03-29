@@ -635,7 +635,7 @@ onMounted(() => {
                 <v-sheet height="300" color="teal" @click="randomize">
                     <v-sheet color="teal-darken-4" class="d-flex justify-space-between pa-2">
                         <div>
-                            {{ today.getDate() }} {{ today.toLocaleString('id-ID', {weekday: 'long'}) }}
+                            {{ today.toLocaleString('id-ID', {weekday: 'long'}) }}, {{ today.getDate() }} {{ today.toLocaleString('id-ID', {month: 'long'}) }}
                             {{ today.getFullYear() }}
                         </div>
                         <div>
