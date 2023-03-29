@@ -1,17 +1,55 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import {onMounted, reactive, ref} from "vue";
+const wisdoms =[
+    "Hidup yang keren adalah hidup yang pola pikirnya menunggu waktu ibadah sambil melakukan kemanfaatan. <br/><br/> ~Gus Baha",
+    "Bersyukur itu perlu terus latihan. Jangan hanya rasa syukur hanya saat memiliki sesuatu.  <br/><br/>~Gus Baha",
+    "Mencintai tidak cukup dengan tidak melukai yang dicintai. Tapi juga harus sabar saat dilukai yang dicintai.  <br/><br/>~Gus Baha",
+    "Kita ini mudah mencintai orang yang berjasa dalam hidup kita, tapi kenapa tidak mudah mencintai Allah yang jasa-jasanya sangat besar dalam hidup kita.  <br/><br/>~Gus Baha",
+    "Allah mengabulkan doa-doa ketika kita sudah siap, bukan ketika kita menginginkannya.  <br/><br/>~Gus Baha",
+    "Kebodohan itu merusak, tapis sok pintar itu jauh lebih merusak. <br/><br/>~Gus Baha",
+    "Salah satu keburukan manusia adalah membawa-bawa nama Allah untuk kepentingan dirinya, seolah-olah apa yang dipikirannya sesuai dengan kehendak Allah. <br/><br/>~Gus Baha",
+    "Cinta mungkin terkadang membuatmu rapuh, tetapi berterima kasihlah kepadanya, karena cinta darinya bisa membuatmu lebih kuat dari sebelumnya. <br/><br/>~Gus Baha",
+    "Kita harus curiga dengan otak dan pikiran kita.  <br/><br/>~Gus Baha",
+    "Salah satu kebiasaan buruk manusia ialah suka membawa-bawa nama Allah untuk kepentingan dirinya, seolah-olah apa yang ada dipikirannya selalu sesuai dengan yang dikehendaki oleh Allah. <br/><br/>~Gus Baha",
+    "Untuk memperbaiki manusia itu butuh proses, tidak bisa langsung dihabisi. Jika tugas kenabian hanya untuk menghabisi keburukan, tentu bermitra dengan Izrail jauh lebih efektif ketimbang bermitra dengan Jibril.  <br/><br/>~Gus Baha",
+    "Barang siapa belajar tanpa guru, maka gurunya adalah setan.  <br/><br/>~Gus Baha",
+    "Kalau malaikat datang dan memberitahu saya bahwa kelak saya akan masuk neraka selamanya, apakah saya akan berhenti menyembah Tuhan? Tidak. Saya akan terus menyembah Tuhan.  <br/><br/>~Gus Baha",
+    "Sebesar apapun dosa seseorang, tidak ada yang berhak menghalangi rasa cinta hamba pada Tuhannya, meski cara yang digunakan untuk menunjukkan rasa cinta itu terasa aneh di mata kita.  <br/><br/>~Gus Baha",
+    "Jangan membenci orang yang sedang kafir saat ini, bisa saja suatu saat orang tersebutlah yang mensyafaati kamu. Tirulah Kanjeng Nabi Muhammad SAW yang berdoa kepada Allah SWT untuk Sayyidina Umar Bin Khatab yang saat itu sedang kafir  <br/><br/>~Gus Baha",
+    "Yang abadi adalah yang kita sedekahkan. <br/><br/>~Gus Baha",
+    "Kebodohan itu merusak, tetapi merasa dirinya paling pintar lebih merusak.  <br/><br/>~Gus Baha",
+    "Sering kali kita mengabaikan hal-hal kecil, padahal dari sanalah sesuatu yang besar lahir dan tumbuh.  <br/><br/>~Gus Baha",
+    "Sebuah langkah kecil merupakan sebuah awal yang begitu panjang.   <br/><br/>~Gus Baha",
+    "Terkadang, mungkin Allah membuat hamba-Nya merasa kecewa, namun percayalah Ia hanya ingin engkau kembali berharap hanya kepada-Nya. <br/><br/>~Gus Baha",
+    "Saat kamu merasa tidak ada orang yang berada di pihakmu, tenanglah karena Allah selalu bersamamu. <br/><br/>~Gus Baha",
+    "Jangan pernah putus asa saat merasa dalam kesulitan, sebab Allah menyertakan kemudahan setelah kesulitan. <br/><br/>~Gus Baha",
+    "Allah akan mengganti semua luka yang pernah engkau rasakan dengan kebahagiaan yang tak pernah terduga. <br/><br/>~Gus Baha",
+    "Terkadang, mungkin Allah membuat hamba-Nya merasa kecewa, namun percayalah Ia hanya ingin engkau kembali berharap hanya kepada-Nya. <br/><br/>~Gus Baha",
+    "Allah tidak pernah ingkar pada hamba-Nya, meski sekecil biji Zarrah pun janji Allah selalu ditepati. <br/><br/>~Gus Baha",
+    "Saat kamu merasa tidak ada orang yang berada dipihakmu, tenanglah karena Allah selalu bersamamu. <br/><br/>~Gus Baha",
+    "Sering kali kita mengabaikan hal-hal kecil, padahal dari sanalah sesuatu yang besar lahir dan tumbuh. <br/><br/>~Gus Baha",
+    "Harapan dan keinginan ini seharusnya sejalan. Ya sejalan dengan betapa besar usaha yang Kamu lakukan dalam mewujudkannya.  <br/><br/>~Gus Baha",
+    "Untuk menjadi yang terbaik. Kamu harus mempunyai mimpi yang besar serta semangat untuk mewujudkannya. <br/><br/>~Gus Baha",
+    "Seberapa besar pengorbanan yang ia lakukan, maka dari situlah kita akan tahu betapa besar cintanya kepadamu. <br/><br/>~Gus Baha",
+    "Cinta mungkin terkadang membuatmu rapuh, tetapi berterima kasihlah kepadanya, karena cinta darinya bisa membuatmu lebih kuat dari sebelumnya. <br/><br/>~Gus Baha",
+    "Dosa terbesar istri adalah Nggoblokno suami.  <br/><br/>~Gus Baha",
+    "Di akhirat, kenangan yang paling indah di dunia adalah, seberapa sering kita sujud kepada Allah SWT. <br/><br/>~Gus Baha",
+    "Tak masalah saat ini kamu miskin. Bisa jadi itu alasan Allah kelak untuk membawamu ke surga-Nya. <br/><br/>~Gus Baha",
+]
 
+let today = ref(new Date())
 const form = reactive({
     user: {
         username: null,
         password: null,
-    }
+    },
+    wisdomIndex: Math.floor(Math.random() * wisdoms.length)
 })
 let data = ref({times:null})
 
-function save() {
-    alert(form.user.username)
+function randomize() {
+    form.wisdomIndex = Math.floor(Math.random() * wisdoms.length)
 }
 
 
@@ -570,8 +608,11 @@ const prayTimes = new PrayTimes();
 
 
 onMounted(() => {
-    data.value = prayTimes.getTimes(new Date(), [43, -80], -5);
-
+    prayTimes.tune({imsak:-6, fajr: -6, sunrise:4, dhuhr:2, asr:2, maghrib:1, isha:6})
+    data.value = prayTimes.getTimes(new Date(), [-7.3454047, 110.5112326, 754], +7);
+setInterval(()=>{
+    today.value = new Date()
+},1000)
 })
 </script>
 <template>
@@ -579,52 +620,56 @@ onMounted(() => {
     <v-app>
        <v-sheet>
            <div>
-               <v-sheet height="150" color="teal">
+               <v-sheet height="300" color="teal" @click="randomize">
+                   <v-system-bar color="teal-darken-4" class="d-flex justify-space-between pa-2">
+                       <div>
+                           {{today.getDate()}} {{today.toLocaleString('id-ID', {weekday:'long'})}} {{today.getFullYear()}}
+                       </div>
+                       <div>{{today.getHours()<10?'0'+today.getHours():today.getHours()}}:{{today.getMinutes()<10?'0'+today.getMinutes():today.getMinutes()}}:{{today.getSeconds()<10?'0'+today.getSeconds():today.getSeconds()}}</div>
+                   </v-system-bar>
                    <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                       <h3>GERAKAN PEMUDA ANSOR</h3>
+                       <p class="px-2 text-center" v-html="wisdoms[form.wisdomIndex]"/>
                    </div>
                </v-sheet>
-               <v-sheet style="margin-top: -50px" class="mx-4">
-                   <v-card rounded density="compact">
-                       <v-card-item title="Jadwal Sholat" subtitle="Kecamatan Argomulyo & Sekitarnya"/>
-                       <v-divider/>
-                       <v-card-text>
-                           <v-table>
-                               <tr>
-                                   <td>Imsak</td>
-                                   <td class="text-right" v-text="data.imsak"/>
-                               </tr>
-                               <tr>
-                                   <td>Subuh</td>
-                                   <td class="text-right" v-text="data.fajr"/>
-                               </tr>
-                               <tr>
-                                   <td>Terbit</td>
-                                   <td class="text-right" v-text="data.sunrise"/>
-                               </tr>
-                               <tr>
-                                   <td>Dzuhur</td>
-                                   <td class="text-right" v-text="data.dhuhr"/>
-                               </tr>
-                               <tr>
-                                   <td>Asar</td>
-                                   <td class="text-right" v-text="data.asr"/>
-                               </tr>
-                               <tr>
-                                   <td>Maghrib</td>
-                                   <td class="text-right" v-text="data.maghrib"/>
-                               </tr>
-                               <tr>
-                                   <td>Isya</td>
-                                   <td class="text-right" v-text="data.isha"/>
-                               </tr>
-                           </v-table>
-                       </v-card-text>
-                       <v-sheet height="50" class="d-flex align-center justify-center" color="teal">
-                           <h4>powered by: Ansor Argomulyo</h4>
-                       </v-sheet>
-                   </v-card>
-               </v-sheet>
+               <v-card class="rounded-t-xl" density="compact">
+                   <v-card-item prepend-icon="mdi-calendar-clock" title="JADWAL IMSAKIYAH" subtitle="Kecamatan Argomulyo & Sekitarnya"/>
+                   <v-divider/>
+                   <v-card-text>
+                       <v-table>
+                           <tr>
+                               <td>Imsak</td>
+                               <td class="text-right" v-text="data.imsak"/>
+                           </tr>
+                           <tr>
+                               <td>Subuh</td>
+                               <td class="text-right" v-text="data.fajr"/>
+                           </tr>
+                           <tr>
+                               <td>Terbit</td>
+                               <td class="text-right" v-text="data.sunrise"/>
+                           </tr>
+                           <tr>
+                               <td>Dzuhur</td>
+                               <td class="text-right" v-text="data.dhuhr"/>
+                           </tr>
+                           <tr>
+                               <td>Asar</td>
+                               <td class="text-right" v-text="data.asr"/>
+                           </tr>
+                           <tr>
+                               <td>Maghrib</td>
+                               <td class="text-right" v-text="data.maghrib"/>
+                           </tr>
+                           <tr>
+                               <td>Isya</td>
+                               <td class="text-right" v-text="data.isha"/>
+                           </tr>
+                       </v-table>
+                   </v-card-text>
+                   <v-sheet height="50" class="d-flex align-center justify-center" color="teal">
+                       <h4>powered by: Ansor Argomulyo</h4>
+                   </v-sheet>
+               </v-card>
            </div>
        </v-sheet>
     </v-app>
@@ -636,7 +681,9 @@ onMounted(() => {
 }
 tr{
     border-width: thin 0 0 0;
-
-
+}
+td{
+    height: 40px;
+    font-size: 14pt;
 }
 </style>
