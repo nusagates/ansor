@@ -577,14 +577,14 @@ onMounted(() => {
 <template>
     <Head title="Jadwal Sholat"/>
     <v-app>
-       <v-sheet class="d-flex justify-center">
+       <v-sheet>
            <div>
-               <v-sheet max-width="500" height="150" color="teal">
+               <v-sheet height="150" color="teal">
                    <div class="d-flex flex-column fill-height justify-center align-center text-white">
                        <h3>GERAKAN PEMUDA ANSOR</h3>
                    </div>
                </v-sheet>
-               <v-sheet max-width="470" style="margin-top: -50px" class="mx-4">
+               <v-sheet style="margin-top: -50px" class="mx-4">
                    <v-card rounded density="compact">
                        <v-card-item title="Jadwal Sholat" subtitle="Kecamatan Argomulyo & Sekitarnya"/>
                        <v-divider/>
