@@ -12,6 +12,8 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 const vuetify = createVuetify({
     components,
@@ -28,6 +30,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .use(vuetify)
+            .component('QuillEditor', QuillEditor)
             .mount(el);
     },
     progress: {

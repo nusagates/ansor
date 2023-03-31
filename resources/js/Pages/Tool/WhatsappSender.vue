@@ -8,14 +8,12 @@
       <v-card-text>
         <p>Kamu bisa kirim pesan Whatsapp tanpa perlu menyimpan nomornya. Coba saja gunakan form di bawah ini.</p>
         <v-sheet class="d-flex">
-          <v-responsive width="80">
-            <v-select prefix="+" density="compact" :items="data.code" v-model="field.code"/>
-          </v-responsive>
-          <v-responsive>
-            <v-text-field density="compact" label="Nomor Tujuan" color="teal" v-model="field.phone" hint="gunakan format internasioal misal: 6282225005825 atau 608767867" clearable/>
-          </v-responsive>
+          <v-sheet width="80">
+            <v-select density="compact" :items="data.code" v-model="field.code"/>
+          </v-sheet>
+          <v-text-field  type="number" density="compact" label="Nomor Tujuan" color="teal" v-model="field.phone"/>
         </v-sheet>
-        <v-textarea density="compact" label="Isi Pesan" color="teal" v-model="field.message" clearable/>
+        <QuillEditor ref="message" :toolbar="['bold', 'italic', 'strike']" placeholder="Isi Pesan" theme="snow" content-type="html" v-model:content="field.message" />
       </v-card-text>
       <v-card-actions>
         <v-spacer/>
@@ -23,37 +21,53 @@
       </v-card-actions>
     </v-card>
   </v-container>
+  <toast ref="msg"/>
 </template>
 
 <script setup>
-import {Head} from "@inertiajs/vue3";
-import {reactive, ref} from "vue";
 
-const sendBtn = ref(null)
+import {Head} from "@inertiajs/vue3";
+import {onMounted, reactive, ref} from "vue";
+import Toast from "@/Components/Toast.vue";
+
+const msg = ref(null)
+const message = ref('')
 let data = reactive({
-  code: [60, 61, 62]
+  code: ['+60', '+61', '+62']
 })
 let field = reactive({
-  code: 62,
+  code: "+62",
   phone: null,
-  message: null
+  message: ''
 })
 
 function send() {
   if (field.phone === null) {
-    alert("silahkan isi nomor telpon")
+    msg.value.show('Silahkan isi nomor telpon', 'red', 2000)
   } else if (field.message === null) {
-    alert('silahkan isi pesan')
+    msg.value.show('Silahkan isi pesan', 'red', 2000)
   } else {
     let waUrl = 'https://api.whatsapp.com/send/?phone='
     let phone = field.code + field.phone
-    console.log(phone)
+
     let message = field.message
+        .replace(/<p[^>]*>/g, '').replace(/<\/p>/g, "%0a")
+        .replace(/<ol>|<\/ol>/g, '')
+        .replace(/<li>|<\/li>/g, '')
+        .replace(/<strong>|<\/strong>/g, '*')
+        .replace(/<em>|<\/em>/g, '_')
+        .replace(/<s>|<\/s>/g, '~')
+        .replace(/%0a$/, '')
     waUrl += phone.replace(/\D/g, '');
     waUrl += '&text=' + message
     window.open(waUrl)
   }
 }
+
+function bold(){
+
+}
+
 </script>
 
 <style scoped>
