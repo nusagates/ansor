@@ -29,6 +29,9 @@ Route::group(['prefix' => 'tool'], function () {
   Route::get('whatsapp-sender', function () {
     return Inertia::render('Tool/WhatsappSender');
   });
+  Route::get('undangan-digital', function () {
+    return Inertia::render('Tool/EInvitation');
+  });
 });
 Route::get('waktu-sholat', function () {
   return Inertia::render('PrayerTime');

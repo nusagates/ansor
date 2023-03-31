@@ -11,9 +11,11 @@
           <v-sheet width="80">
             <v-select density="compact" :items="data.code" v-model="field.code"/>
           </v-sheet>
-          <v-text-field  type="number" density="compact" label="Nomor Tujuan" color="teal" v-model="field.phone"/>
+          <v-text-field  type="number" density="compact" variant="outlined" placeholder="Nomor Tujuan" color="teal" v-model="field.phone"/>
         </v-sheet>
-        <QuillEditor ref="message" :toolbar="['bold', 'italic', 'strike']" placeholder="Isi Pesan" theme="snow" content-type="html" v-model:content="field.message" />
+        <v-sheet height="300" border>
+            <QuillEditor ref="message" :toolbar="['bold', 'italic', 'strike']" placeholder="Isi Pesan" theme="bubble" content-type="html" v-model:content="field.message" />
+        </v-sheet>
       </v-card-text>
       <v-card-actions>
         <v-spacer/>
