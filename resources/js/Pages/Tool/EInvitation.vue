@@ -5,9 +5,8 @@
             <v-toolbar-title>Undangan Elektronik</v-toolbar-title>
             <v-spacer/>
             <v-toolbar-items>
-                <v-btn @click="saveData" variant="text" icon>
-                    <v-icon>mdi-eye</v-icon>
-                </v-btn>
+
+              <v-btn @click="resetData" variant="flat" color="teal">Reset Data</v-btn>
             </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
@@ -30,10 +29,12 @@
             <template v-for="(item, index) of data.recipients">
                 <v-text-field @click:append="removeRecipient(index)" density="compact" label="Nama" v-model="item.value" :append-icon="index>0?'mdi-close':''"/>
             </template>
-            <v-btn @click="addRecipient" flat density="compact">Tambah Penerima</v-btn>
+            <v-btn @click="addRecipient" variant="outlined" density="compact" prepend-icon="mdi-plus">Tambah Penerima</v-btn>
         </v-card-text>
         <v-card-actions>
-            <v-btn @click="resetData" variant="flat" color="teal">Reset Data</v-btn>
+          <v-btn @click="saveData" variant="flat" color="teal">
+            <v-icon>mdi-eye</v-icon> Preview
+          </v-btn>
         </v-card-actions>
     </v-card>
     <v-dialog v-model="dialog.preview" fullscreen>
