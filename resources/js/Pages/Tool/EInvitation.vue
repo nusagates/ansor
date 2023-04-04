@@ -146,7 +146,7 @@ const date = useDateFormat(now, 'YYYY-MM-DD')
 let dialog = reactive({
     preview: false
 })
-let data = useLocalStorage('userData', {
+let data = useLocalStorage('invitation', {
     recipients:      [{value: null}],
     opening:         'Puji syukur kami panjatkan kehadirat Allah SWT yang senantiasa melimpahkan rahmat, inayah, dan taufiq-Nya kepada kita semua.',
     closing:         'Demikian undangan ini dibuat, atas perhatian dan kehadirannya diucapkan terimakasih.',
