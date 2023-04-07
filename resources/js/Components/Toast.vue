@@ -13,7 +13,7 @@ let snackbar = reactive({
   message: null,
   color: 'red',
   visible: false,
-  duration: 1500
+  duration: 1000
 })
 
 function show(message, color, duration) {

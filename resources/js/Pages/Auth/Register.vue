@@ -32,7 +32,7 @@
                   </v-sheet>
                 </v-sheet>
                 <v-sheet class="d-flex justify-center my-2">
-                  <v-btn @click="file.click()" density="compact" prepend-icon="mdi-image">Ganti</v-btn>
+                  <v-btn @click="file.click()" density="compact" prepend-icon="mdi-image">Ganti Profil</v-btn>
                   <v-btn density="compact" @click="cropProfileImage" v-if="isCrop" prepend-icon="mdi-crop" class="ml-2">Crop</v-btn>
                 </v-sheet>
                 <input v-show="false"
@@ -48,7 +48,7 @@
                 <v-sheet>
                   <v-sheet class="d-flex justify-center">
                     <vue-cropper v-if="isKtpCrop" ref="ktpImage" :src="form.data.images.ktp"/>
-                    <img v-else :src="form.data.images.ktp"/>
+                    <img v-if="!(isKtpCrop||form.data.images.ktp=='')" :src="form.data.images.ktp" alt="ktp"/>
                   </v-sheet>
                 </v-sheet>
                 <v-sheet class="d-flex justify-center my-2">
@@ -65,10 +65,10 @@
               <v-text-field label="Nama Lengkap" density="compact" v-model="form.name"/>
               <v-text-field label="Nomor Telpon" density="compact" v-model="form.phone" type="tel"/>
               <v-text-field label="Email" density="compact" v-model="form.email" type="email"/>
-              <v-text-field hide-details label="Sandi" density="compact" v-model="form.password" type="password"/>
-              <smal class="text-red" v-if="form.password!==''&&form.password.length<8">Panjang sandi minimal 8 karakter</smal>
+              <v-text-field hint="Buatlah sandi yang kuat dan aman" label="Sandi" density="compact" v-model="form.password" type="password"/>
+              <small class="text-red v-messages" role="alert" v-if="form.password!==''&&form.password.length<8">Panjang sandi minimal 8 karakter</small>
               <v-text-field class="mt-4" hide-details label="Konfirmasi Sandi" density="compact" v-model="form.password_confirmation" type="password"/>
-              <smal class="text-red" v-if="form.password!==form.password_confirmation">Sandi yang Anda masukkan tidak sama</smal>
+              <small class="text-red" v-if="form.password!==form.password_confirmation">Sandi yang Anda masukkan tidak sama</small>
               <v-checkbox label="Centang jika sudah ikut Banser" v-model="form.is_banser"/>
             </v-window-item>
             <v-window-item :value="3">
@@ -95,7 +95,7 @@
               <!-- Pendidikan Agama -->
               <v-sheet>
                 <template v-for="(rel, index) of form.data.religious_education">
-                  <v-card>
+                  <v-card border class="mb-2">
                     <v-toolbar density="compact">
                       <v-toolbar-title>Agama {{ index + 1 }}</v-toolbar-title>
                       <v-spacer/>
@@ -107,15 +107,17 @@
                       <v-select label="Jenjang Pendidikan" density="compact" v-model="rel.level" :items="religiouslEducationLevel"/>
                       <v-text-field label="Nama Madrasah/Pesantren" density="compact" v-model="rel.name"/>
                       <v-text-field label="Tahun Lulus" density="compact" v-model="rel.year" type="number"/>
+                      <v-sheet v-if="index==form.data.religious_education.length-1" class="d-flex justify-center">
+                        <v-btn density="compact" variant="text" @click="form.data.religious_education.push({level: '', name: '', year: ''})" prepend-icon="mdi-plus-box">Pendidikan Agama</v-btn>
+                      </v-sheet>
                     </v-card-text>
                   </v-card>
                 </template>
-                <v-btn class="my-2" density="compact" variant="outlined" @click="form.data.religious_education.push({level: '', name: '', year: ''})">Tambah Pendidikan</v-btn>
               </v-sheet>
               <!-- Pendidikan Formal -->
               <v-sheet>
                 <template v-for="(rel, index) of form.data.formal_education">
-                  <v-card>
+                  <v-card border class="mb-2">
                     <v-toolbar density="compact">
                       <v-toolbar-title>Formal {{ index + 1 }}</v-toolbar-title>
                       <v-spacer/>
@@ -127,39 +129,71 @@
                       <v-select label="Jenjang Pendidikan" density="compact" v-model="rel.level" :items="formalEducationLevel"/>
                       <v-text-field label="Nama Sekolah/Perguruan Tinggi" density="compact" v-model="rel.name"/>
                       <v-text-field label="Tahun Lulus" density="compact" v-model="rel.year" type="number"/>
+                      <v-sheet v-if="index==form.data.formal_education.length-1" class="d-flex justify-center">
+                        <v-btn density="compact" variant="text" @click="form.data.formal_education.push({level: '', name: '', year: ''})" prepend-icon="mdi-plus-box">Pendidikan Formal</v-btn>
+                      </v-sheet>
                     </v-card-text>
                   </v-card>
                 </template>
-                <v-btn class="my-2" density="compact" variant="outlined" @click="form.data.formal_education.push({level: '', name: '', year: ''})">Tambah Pendidikan</v-btn>
               </v-sheet>
               <!-- Kaderisasi -->
               <v-sheet>
                 <template v-for="(rel, index) of form.data.cadre_education">
-                  <v-card>
+                  <v-card border class="mb-2">
                     <v-toolbar density="compact">
                       <v-toolbar-title>Kaderisasi {{ index + 1 }}</v-toolbar-title>
                       <v-spacer/>
-                      <v-btn v-if="index>0" @click="form.data.cadre_education.splice(index,1)" color="red" icon>
+                      <v-btn v-if="index>0" @click="removeCadreLevel(index)" color="red" icon>
                         <v-icon>mdi-close</v-icon>
                       </v-btn>
                     </v-toolbar>
                     <v-card-text>
                       <v-select label="Jenjang Kaderisasi" density="compact" v-model="rel.level" :items="cadreEducationLevel"/>
                       <v-text-field label="Tahun Kaderisasi" density="compact" v-model="rel.year" type="number"/>
+                      <v-sheet class="text-center">
+                        <v-sheet>
+                          <v-sheet class="d-flex justify-center">
+                            <vue-cropper v-if="isCertCrop===index" ref="certImage" :src="rel.file"/>
+                            <img v-if="!(isCertCrop==index||rel.file=='')" :src="rel.file" alt="ktp"/>
+                          </v-sheet>
+                        </v-sheet>
+                        <v-sheet class="d-flex justify-center my-2">
+                          <v-btn @click="pickCert(index)" density="compact" prepend-icon="mdi-image">Upload Sertifikat</v-btn>
+                          <v-btn density="compact" @click="cropCertImage(index)" v-if="isCertCrop===index" prepend-icon="mdi-crop" class="ml-2">Crop</v-btn>
+                        </v-sheet>
+                        <input v-show="false"
+                               type="file"
+                               ref="fileCert"
+                               @change="selectCert($event, index)"
+                               accept="image/*"
+                        />
+                      </v-sheet>
+                      <v-sheet v-if="index===form.data.cadre_education.length-1">
+                        <v-divider thickness="3" color="blue" class="border-opacity-100"/>
+                        <v-sheet class="d-flex justify-center">
+                          <v-btn class="my-2" density="compact" variant="text" @click="addCadreLevel" prepend-icon="mdi-plus-box">Jenjang Kaderisasi</v-btn>
+                        </v-sheet>
+                      </v-sheet>
                     </v-card-text>
+
                   </v-card>
                 </template>
-                <v-btn class="my-2" density="compact" variant="outlined" @click="form.data.cadre_education.push({level: '', file: '', year: ''})">Tambah Kaderisasi</v-btn>
               </v-sheet>
 
             </v-window-item>
           </v-window>
         </v-card-text>
         <v-card-actions>
-          <v-btn v-if="window>1" :disabled="window<=1" @click="window--">Sebelumnya</v-btn>
+          <v-btn v-if="window>1" :disabled="window<=1" @click="window--">Kembali</v-btn>
           <v-spacer/>
-          <v-btn v-if="window<4" :disabled="!form.is_agree" @click="window++" color="teal" variant="flat">Selanjutnya</v-btn>
+          <v-btn v-if="window<4" :disabled="!form.is_agree" @click="window++" color="teal" variant="flat">Lanjut</v-btn>
           <v-btn :disabled="loading.user.store" :loading="loading.user.store" v-if="window===4" @click="storeUser" color="teal" variant="flat">Simpan</v-btn>
+        </v-card-actions>
+        <v-card-actions class="d-flex justify-center">
+          <v-btn color="red" variant="text" @click="resetDialog=true">
+            <v-icon>mdi-delete</v-icon>
+            Reset Data
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-sheet>
@@ -175,6 +209,26 @@
       </v-card>
     </v-sheet>
   </v-sheet>
+  <v-dialog v-model="resetDialog" width="350">
+    <v-card>
+      <v-toolbar density="compact" color="warning">
+        <v-toolbar-title>Konfirmasi</v-toolbar-title>
+        <v-spacer/>
+        <v-toolbar-items>
+          <v-btn icon variant="text" @click="resetDialog=false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar-items>
+      </v-toolbar>
+      <v-card-text>
+        Apakah Anda yakin ingin menghapus semua data yang telah diinput?
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer/>
+        <v-btn variant="flat" color="warning" @click="resetData">Reset</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
   <toast ref="msg"/>
 </template>
 <script setup>
@@ -187,14 +241,18 @@ import "cropperjs/dist/cropper.min.css"
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 
+const resetDialog = ref(false)
 let managements = ref([])
 const msg = ref(null)
 const profileImage = ref();
 const ktpImage = ref();
+const certImage = ref([]);
 const file = ref();
 const fileKtp = ref();
+const fileCert = ref([]);
 const isCrop = ref(false)
 const isKtpCrop = ref(false)
+const isCertCrop = ref(null)
 const form = useLocalStorage('userData', {
   id: null,
   is_agree: false,
@@ -284,6 +342,25 @@ function selectKtp(event) {
 
 }
 
+function pickCert(index) {
+  fileCert.value[index].click()
+}
+
+function selectCert(event, index) {
+  console.log(index)
+  if (!(event && event.target)) return
+  const {files} = event.target;
+  if (files && files[0]) {
+    const reader = new FileReader()
+    reader.onload = event => {
+      isCertCrop.value = index
+      form.value.data.cadre_education[index].file = event.target.result
+    }
+    reader.readAsDataURL(files[0])
+  }
+
+}
+
 function storeUser() {
   if (form.value.id === null) {
     loading.user.store = true
@@ -303,24 +380,83 @@ function storeUser() {
 }
 
 function cropProfileImage() {
-  let croppedImage = profileImage.value.getCroppedCanvas().toDataURL()
-  form.value.data.images.profile = croppedImage
+  form.value.data.images.profile = profileImage.value.getCroppedCanvas().toDataURL()
   isCrop.value = false
 }
 
 function cropKtpImage() {
-  let croppedImage = ktpImage.value.getCroppedCanvas().toDataURL()
-  form.value.data.images.ktp = croppedImage
+  form.value.data.images.ktp = ktpImage.value.getCroppedCanvas().toDataURL()
   isKtpCrop.value = false
 }
 
+function cropCertImage(index) {
+
+  form.value.data.cadre_education[index].file = certImage.value[0].getCroppedCanvas().toDataURL()
+  isCertCrop.value = null
+}
+
+function addCadreLevel() {
+  fileCert.value = []
+  certImage.value = []
+  form.value.data.cadre_education.push({level: '', file: '', year: ''})
+}
+
+function removeCadreLevel(index) {
+  form.value.data.cadre_education.splice(index, 1)
+  //certImage.value.splice(index, 1)
+  //fileCert.value.splice(index, 1)
+  delete certImage.value[index]
+  delete fileCert.value[index]
+}
+
+function resetData() {
+  form.value = {
+    id: null,
+    is_agree: false,
+    is_banser: false,
+    management_id: '',
+    member_number: '',
+    name: '',
+    phone: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+    nik: '',
+    data: {
+      images: {
+        profile: '/assets/images/default-profile.webp',
+        ktp: ''
+      },
+      pob: '',
+      dob: '',
+      job: '',
+      average_income: '',
+      marital_status: 'Single',
+      number_of_children: '',
+      last_fomal_education: 'SD',
+      last_religious_education: 'TPQ',
+      last_cadre_education: 'Belum Pernah',
+      address: {
+        provinsi: 'Jawa Tengah',
+        kota: 'Salatiga',
+        kecamatan: 'Argomulyo',
+        kelurahan: '',
+        rt: '',
+        rw: '',
+        kodepos: '',
+        jalan: ''
+      },
+      formal_education: [{level: '', name: '', year: ''}],
+      religious_education: [{level: '', name: '', year: ''}],
+      cadre_education: [{level: '', file: '', year: ''}],
+    }
+  }
+  window.value = 1
+  resetDialog.value = false
+}
 </script>
 <style>
 ol {
   list-style-type: decimal;
-}
-
-.cropper {
-  width: 300px;
 }
 </style>
