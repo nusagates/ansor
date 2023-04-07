@@ -34,10 +34,12 @@ class UserController extends Controller
       'management_id'         => 'required|integer|exists:management,id',
       'nik'                   => 'required|string|unique:users,nik',
       'name'                  => 'required|string',
-      'phone'                 => 'required|string',
-      'email'                 => 'required|email',
+      'phone'                 => 'required|string|unique:users,phone',
+      'email'                 => 'required|email|unique:users,email',
       'password'              => 'required|string|min:8|confirmed',
       'password_confirmation' => 'required|string|min:8',
+      'is_banser'             => 'required|boolean',
+      'data'                  => 'required|array'
     ];
     $validator = Validator::make($request->post(), $rules);
     if ($validator->fails()) {
@@ -50,6 +52,9 @@ class UserController extends Controller
       'phone'         => $request->phone,
       'email'         => $request->email,
       'password'      => bcrypt($request->password),
+      'is_banser'     => $request->is_banser,
+      'member_number' => $request->member_number,
+      'meta'          => $request->data
     ]);
 
     return Responses::showSuccessMessage('Data berhasil disimpan', $user);
