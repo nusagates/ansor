@@ -206,6 +206,12 @@
         <v-card-text>
           Terimakasih telah mengisi form pendaftaran keanggotaan Ansor. Data Anda segera diproses oleh tim kaderisasi.
         </v-card-text>
+        <v-card-actions class="d-flex justify-center">
+          <v-btn color="red" variant="text" @click="resetDialog=true">
+            <v-icon>mdi-delete</v-icon>
+            Reset Data
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-sheet>
   </v-sheet>
