@@ -1,7 +1,7 @@
 <template>
   <Head title="Pendaftaran Keanggotaan"/>
   <v-sheet class="d-flex justify-center mx-2">
-    <v-sheet width="500">
+    <v-sheet v-if="form.id===null" width="500">
       <v-sheet class="d-flex justify-center my-5">
         <v-img max-width="150" src="/assets/images/logo.png"/>
       </v-sheet>
@@ -159,8 +159,19 @@
           <v-btn v-if="window>1" :disabled="window<=1" @click="window--">Sebelumnya</v-btn>
           <v-spacer/>
           <v-btn v-if="window<4" :disabled="!form.is_agree" @click="window++" color="teal" variant="flat">Selanjutnya</v-btn>
-          <v-btn v-if="window===4" @click="storeUser" color="teal" variant="flat">Simpan</v-btn>
+          <v-btn :disabled="loading.user.store" :loading="loading.user.store" v-if="window===4" @click="storeUser" color="teal" variant="flat">Simpan</v-btn>
         </v-card-actions>
+      </v-card>
+    </v-sheet>
+    <v-sheet class="ma-5" v-else>
+      <v-sheet class="d-flex justify-center my-5">
+        <v-img max-width="150" src="/assets/images/logo.png"/>
+      </v-sheet>
+      <v-card>
+        <v-toolbar density="compact" color="teal" title="Pendaftaran Berhasil"/>
+        <v-card-text>
+          Terimakasih telah mengisi form pendaftaran keanggotaan Ansor. Data Anda segera diproses oleh tim kaderisasi.
+        </v-card-text>
       </v-card>
     </v-sheet>
   </v-sheet>
@@ -207,8 +218,8 @@ const form = useLocalStorage('userData', {
     average_income: '',
     marital_status: 'Single',
     number_of_children: '',
-    last_fomal_education: 'TPQ',
-    last_religious_education: 'SD',
+    last_fomal_education: 'SD',
+    last_religious_education: 'TPQ',
     last_cadre_education: 'Belum Pernah',
     address: {
       provinsi: 'Jawa Tengah',
@@ -278,7 +289,7 @@ function storeUser() {
     loading.user.store = true
     axios.post('/user', form.value).then(res => {
       if (res.data.code === 200) {
-        msg.value.show(res.data.message)
+        msg.value.show(res.data.message, 'success')
         form.value.id = res.data.data.id
       } else {
         msg.value.show(res.data.message, 'red')
