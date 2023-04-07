@@ -209,7 +209,7 @@ const form = useLocalStorage('userData', {
   nik: '',
   data: {
     images: {
-      profile: '',
+      profile: '/assets/images/default-profile.webp',
       ktp: ''
     },
     pob: '',
