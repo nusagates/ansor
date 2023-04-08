@@ -689,7 +689,7 @@ onMounted(() => {
           </v-card>
         </div>
       </v-sheet>
-      <v-dialog transition="dialog-bottom-transition" v-model="dialog.info">
+      <v-dialog width="350" transition="dialog-bottom-transition" v-model="dialog.info">
         <v-card>
           <v-toolbar density="compact">
             <v-toolbar-title>Info</v-toolbar-title>
@@ -698,10 +698,12 @@ onMounted(() => {
               <v-btn @click="dialog.info=false" variant="text" icon><v-icon>mdi-close</v-icon></v-btn>
             </v-toolbar-items>
           </v-toolbar>
-          <v-card-text>
-            <p class="text-justify">Data yang digunakan untuk menghitung waktu imsakiyah adalah koordinat lintang {{inputData.lat}}, koordinat bujur {{inputData.lng}}, ketinggian {{inputData.elevation}}, dan menggunakan zona waktu UTC+7</p>
-            <p class="mt-2 text-justify">Ketuk kata mutiara untuk menampilkan kata mutiara lain secara random</p>
-            <p class="mt-2 text-justify">Jika ada kritik/saran/masukan silahkan hubungi pengembang melalui <v-btn target="_blank" color="teal" href="https://wa.me/6282225005825" variant="text" prepend-icon="mdi-whatsapp">0822 2500 5825</v-btn> </p>
+          <v-card-text class="ml-2">
+            <ul>
+              <li>Data yang digunakan untuk menghitung waktu imsakiyah adalah koordinat lintang {{inputData.lat}}, koordinat bujur {{inputData.lng}}, ketinggian {{inputData.elevation}}, dan menggunakan zona waktu UTC+7</li>
+              <li class="mt-2">Ketuk kata mutiara untuk menampilkan kata mutiara lain secara random</li>
+              <li class="mt-2">Jika ada kritik/saran/masukan silahkan hubungi pengembang melalui <v-btn target="_blank" color="teal" href="https://wa.me/6282225005825" variant="text" prepend-icon="mdi-whatsapp">0822 2500 5825</v-btn> </li>
+            </ul>
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -721,5 +723,8 @@ tr {
 td {
     height: 40px;
     font-size: 14pt;
+}
+ul{
+  list-style-type: square;
 }
 </style>
