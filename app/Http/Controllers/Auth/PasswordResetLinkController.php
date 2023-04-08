@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
+use Nusagates\Helper\Responses;
 
 class PasswordResetLinkController extends Controller
 {
@@ -27,7 +28,7 @@ class PasswordResetLinkController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): array
     {
         $request->validate([
             'email' => 'required|email',
@@ -41,7 +42,7 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return back()->with('status', __($status));
+            return Responses::showSuccessMessage('ok',);
         }
 
         throw ValidationException::withMessages([

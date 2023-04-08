@@ -1,61 +1,44 @@
 <script setup>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import {Head} from '@inertiajs/vue3';
+import {reactive, ref} from "vue";
 
-defineProps({
-    status: {
-        type: String,
-    },
-});
-
-const form = useForm({
-    email: '',
-});
-
+const loading = ref(false)
+const status = ref(false)
+const form = reactive({
+  email: ''
+})
+let errors = reactive([])
 const submit = () => {
-    form.post(route('password.email'));
+  loading.value = true
+  axios.post(route('password.email'), form)
+      .then(res=>{
+        status.value = true
+        loading.value=false
+      })
+      .catch(er => {
+        errors = er.response.data.errors
+        loading.value = false
+      })
 };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Forgot Password" />
+  <GuestLayout>
+    <Head title="Forgot Password"/>
 
-        <div class="mb-4 text-sm text-gray-600">
-            Forgot your password? No problem. Just let us know your email address and we will email you a password reset
-            link that will allow you to choose a new one.
-        </div>
+    <v-sheet v-if="!status">
+      <div class="mb-4 text-sm text-gray-600">
+        Lupa password Anda? Tidak masalah. Beritahu alamat email Anda dan kami akan mengirimkan link reset passwword.
+      </div>
+      <form @submit.prevent="submit">
+        <v-text-field density="compact" label="Email" v-model="form.email" :error-messages="errors.email" type="email" required/>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
+        <v-btn :disabled="loading" :loading="loading" variant="flat" color="teal" type="submit">Email Link Reset Password</v-btn>
+      </form>
+    </v-sheet>
+    <v-alert v-else title="Permintaan Diterima" text="Permintaan reset password telah diterima. Silahkan cek pesan masuk email Anda. Periksa folder spam jika tidak ada pesan masuk baru" color="success"/>
 
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <PrimaryButton :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Email Password Reset Link
-                </PrimaryButton>
-            </div>
-        </form>
-    </GuestLayout>
+  </GuestLayout>
 </template>
