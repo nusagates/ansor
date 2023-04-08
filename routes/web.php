@@ -31,7 +31,7 @@ Route::group(['prefix' => 'tool'], function () {
   Route::get('whatsapp-sender', function () {
     return Inertia::render('Tool/WhatsappSender');
   });
-  Route::get('undangan-digital', function () {
+  Route::get('undangan-elektronik', function () {
     return Inertia::render('Tool/EInvitation');
   });
 });

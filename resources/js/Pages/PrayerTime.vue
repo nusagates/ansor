@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {Head} from '@inertiajs/vue3';
 import {onMounted, reactive, ref} from "vue";
+import Container from "@/Components/Container.vue";
 
 const wisdoms = [
     "Hidup yang keren adalah hidup yang pola pikirnya menunggu waktu ibadah sambil melakukan kemanfaatan. <br/><br/> ~Gus Baha",
@@ -625,89 +626,87 @@ onMounted(() => {
 </script>
 <template>
     <Head title="Jadwal Sholat"/>
-    <inertia-head>
-        <title>Your page title</title>
-        <meta name="description" content="Your page description">
-    </inertia-head>
-    <v-app>
-        <v-sheet>
-            <div>
-                <v-sheet height="300" color="teal" @click="randomize">
-                    <v-sheet color="teal-darken-4" class="d-flex justify-space-between pa-2">
-                        <div>
-                            {{ today.toLocaleString('id-ID', {weekday: 'long'}) }}, {{ today.getDate() }} {{ today.toLocaleString('id-ID', {month: 'long'}) }}
-                            {{ today.getFullYear() }}
-                        </div>
-                        <div>
-                            {{ today.getHours() < 10 ? '0' + today.getHours() : today.getHours() }}:{{ today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes() }}:{{ today.getSeconds() < 10 ? '0' + today.getSeconds() : today.getSeconds() }}
-                        </div>
-                    </v-sheet>
-                    <div class="d-flex flex-column fill-height justify-center align-center text-white">
-                        <p class="px-2 text-center" v-html="wisdoms[form.wisdomIndex]"/>
-                    </div>
-                </v-sheet>
-                <v-card class="rounded-t-xl" density="compact">
-                    <v-card-item prepend-icon="mdi-calendar-clock" title="JADWAL IMSAKIYAH"
-                                 subtitle="Kecamatan Argomulyo & Sekitarnya"/>
-                    <v-divider/>
-                    <v-card-text>
-                        <v-table>
-                            <tr>
-                                <td>Imsak</td>
-                                <td class="text-right" v-text="data.imsak"/>
-                            </tr>
-                            <tr>
-                                <td>Subuh</td>
-                                <td class="text-right" v-text="data.fajr"/>
-                            </tr>
-                            <tr>
-                                <td>Terbit</td>
-                                <td class="text-right" v-text="data.sunrise"/>
-                            </tr>
-                            <tr>
-                                <td>Dzuhur</td>
-                                <td class="text-right" v-text="data.dhuhr"/>
-                            </tr>
-                            <tr>
-                                <td>Asar</td>
-                                <td class="text-right" v-text="data.asr"/>
-                            </tr>
-                            <tr>
-                                <td>Maghrib</td>
-                                <td class="text-right" v-text="data.maghrib"/>
-                            </tr>
-                            <tr>
-                                <td>Isya</td>
-                                <td class="text-right" v-text="data.isha"/>
-                            </tr>
-                        </v-table>
-                    </v-card-text>
-                    <v-sheet height="50" class="d-flex align-center justify-center" color="teal">
-                        <h4>powered by: Ansor Argomulyo</h4>
-                        <v-btn @click="dialog.info=true" variant="text" icon>
-                            <v-icon>mdi-information-outline</v-icon>
-                        </v-btn>
-                    </v-sheet>
-                </v-card>
+  <Container>
+    <template #content>
+      <v-sheet>
+        <div>
+          <v-sheet height="300" color="teal" @click="randomize">
+            <v-sheet color="teal-darken-4" class="d-flex justify-space-between pa-2">
+              <div>
+                {{ today.toLocaleString('id-ID', {weekday: 'long'}) }}, {{ today.getDate() }} {{ today.toLocaleString('id-ID', {month: 'long'}) }}
+                {{ today.getFullYear() }}
+              </div>
+              <div>
+                {{ today.getHours() < 10 ? '0' + today.getHours() : today.getHours() }}:{{ today.getMinutes() < 10 ? '0' + today.getMinutes() : today.getMinutes() }}:{{ today.getSeconds() < 10 ? '0' + today.getSeconds() : today.getSeconds() }}
+              </div>
+            </v-sheet>
+            <div class="d-flex flex-column fill-height justify-center align-center text-white">
+              <p class="px-2 text-center" v-html="wisdoms[form.wisdomIndex]"/>
             </div>
-        </v-sheet>
-        <v-dialog transition="dialog-bottom-transition" v-model="dialog.info">
-            <v-card>
-                <v-toolbar density="compact">
-                    <v-toolbar-title>Info</v-toolbar-title>
-                    <v-spacer/>
-                    <v-toolbar-items>
-                        <v-btn @click="dialog.info=false" variant="text" icon><v-icon>mdi-close</v-icon></v-btn>
-                    </v-toolbar-items>
-                </v-toolbar>
-                <v-card-text>
-                    <p class="text-justify">Data yang digunakan untuk menghitung waktu imsakiyah adalah koordinat lintang {{inputData.lat}}, koordinat bujur {{inputData.lng}}, ketinggian {{inputData.elevation}}, dan menggunakan zona waktu UTC+7</p>
-                    <p class="mt-2 text-justify">Ketuk kata mutiara untuk menampilkan kata mutiara lain secara random</p>
-                    <p class="mt-2 text-justify">Jika ada kritik/saran/masukan silahkan hubungi pengembang melalui <v-btn target="_blank" color="teal" href="https://wa.me/6282225005825" variant="text" prepend-icon="mdi-whatsapp">0822 2500 5825</v-btn> </p>
-                </v-card-text>
-            </v-card>
-        </v-dialog>
-    </v-app>
+          </v-sheet>
+          <v-card class="rounded-t-xl" density="compact">
+            <v-card-item prepend-icon="mdi-calendar-clock" title="JADWAL IMSAKIYAH"
+                         subtitle="Kecamatan Argomulyo & Sekitarnya"/>
+            <v-divider/>
+            <v-card-text>
+              <v-table>
+                <tr>
+                  <td>Imsak</td>
+                  <td class="text-right" v-text="data.imsak"/>
+                </tr>
+                <tr>
+                  <td>Subuh</td>
+                  <td class="text-right" v-text="data.fajr"/>
+                </tr>
+                <tr>
+                  <td>Terbit</td>
+                  <td class="text-right" v-text="data.sunrise"/>
+                </tr>
+                <tr>
+                  <td>Dzuhur</td>
+                  <td class="text-right" v-text="data.dhuhr"/>
+                </tr>
+                <tr>
+                  <td>Asar</td>
+                  <td class="text-right" v-text="data.asr"/>
+                </tr>
+                <tr>
+                  <td>Maghrib</td>
+                  <td class="text-right" v-text="data.maghrib"/>
+                </tr>
+                <tr>
+                  <td>Isya</td>
+                  <td class="text-right" v-text="data.isha"/>
+                </tr>
+              </v-table>
+            </v-card-text>
+            <v-sheet height="50" class="d-flex align-center justify-center" color="teal">
+              <h4>powered by: Ansor Argomulyo</h4>
+              <v-btn @click="dialog.info=true" variant="text" icon>
+                <v-icon>mdi-information-outline</v-icon>
+              </v-btn>
+            </v-sheet>
+          </v-card>
+        </div>
+      </v-sheet>
+      <v-dialog transition="dialog-bottom-transition" v-model="dialog.info">
+        <v-card>
+          <v-toolbar density="compact">
+            <v-toolbar-title>Info</v-toolbar-title>
+            <v-spacer/>
+            <v-toolbar-items>
+              <v-btn @click="dialog.info=false" variant="text" icon><v-icon>mdi-close</v-icon></v-btn>
+            </v-toolbar-items>
+          </v-toolbar>
+          <v-card-text>
+            <p class="text-justify">Data yang digunakan untuk menghitung waktu imsakiyah adalah koordinat lintang {{inputData.lat}}, koordinat bujur {{inputData.lng}}, ketinggian {{inputData.elevation}}, dan menggunakan zona waktu UTC+7</p>
+            <p class="mt-2 text-justify">Ketuk kata mutiara untuk menampilkan kata mutiara lain secara random</p>
+            <p class="mt-2 text-justify">Jika ada kritik/saran/masukan silahkan hubungi pengembang melalui <v-btn target="_blank" color="teal" href="https://wa.me/6282225005825" variant="text" prepend-icon="mdi-whatsapp">0822 2500 5825</v-btn> </p>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </template>
+  </Container>
 </template>
 
 <style scoped>
