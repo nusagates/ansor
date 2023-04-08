@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Nusagates\Helper\Responses;
 
@@ -90,5 +91,27 @@ class UserController extends Controller
   public function destroy(string $id)
   {
     //
+  }
+
+  public function login(Request $request)
+  {
+    $roles = [
+      'email'    => 'required|email',
+      'password' => 'required',
+      'remember' => 'required|boolean'
+    ];
+    $validator = Validator::make($request->post(), $roles);
+    if ($validator->fails()) {
+      return Responses::showValidationError($validator);
+    }
+    $user = User::where('email', $request->email)->first();
+    if ($user) {
+      if (password_verify($request->password, $user->password)) {
+        Auth::loginUsingId($user->id, $request->boolean('remember'));
+        return Responses::showSuccessMessage('Akun terverifikasi. Anda akan diarahkan ke halaman baru', $user);
+      }
+      return Responses::showErrorMessage('Sandi tidak valid');
+    }
+    return Responses::showErrorMessage('Akun tidak ditemukan');
   }
 }

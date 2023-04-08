@@ -66,7 +66,8 @@ const menuItem = reactive([
       {url: '/waktu-sholat', title: 'Jadwal Sholat', icon: 'mdi-send', value: 'prayer'},
     ]
   },
-  {url: '/register', title: 'Daftar', icon: 'mdi-account', value: 'register', children: null}
+  {url: '/register', title: 'Daftar', icon: 'mdi-account', value: 'register', children: null},
+  {url: '/login', title: 'Masuk', icon: 'mdi-login', value: 'login', children: null}
 
 ])
 </script>
