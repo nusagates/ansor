@@ -47,8 +47,21 @@ const drawer = ref(false)
 const menuItem = reactive([
   {url: '/', title: 'Beranda', icon: 'mdi-home', value: 'home', children: null},
   {
+    url: '#', title: 'Administrasi', icon: 'mdi-file-document-multiple', value: 'admin', children: [
+      {url: '#', title: 'Data Anggota', icon: 'mdi-email', value: 'member'},
+      {url: '#', title: 'Jadwal Kegiatan', icon: 'mdi-email', value: 'agenda'},
+      {url: '#', title: 'Dokumentasi Kegiatan', icon: 'mdi-send', value: 'documentation'},
+      {url: '#', title: 'Daftar Hadir', icon: 'mdi-send', value: 'attendance'},
+      {url: '#', title: 'Buku Tamu', icon: 'mdi-send', value: 'guest-book'},
+      {url: '#', title: 'Manajemen Surat', icon: 'mdi-send', value: 'letter'},
+      {url: '#', title: 'Buku Inventaris', icon: 'mdi-send', value: 'inventory'},
+      {url: '#', title: 'Akreditasi', icon: 'mdi-send', value: 'acreditation'},
+      {url: '#', title: 'Audit Kinerja', icon: 'mdi-send', value: 'audit'},
+    ]
+  },
+  {
     url: '#', title: 'Tool', icon: 'mdi-tools', value: 'tool', children: [
-      {url: '/tool/undangan-elektronik', title: 'Undangan Elektronik', icon: 'mdi-send', value: 'invit'},
+      {url: '/tool/undangan-elektronik', title: 'Undangan Elektronik', icon: 'mdi-email', value: 'invit'},
       {url: '/tool/whatsapp-sender', title: 'Kirim Whatsapp', icon: 'mdi-send', value: 'whatsapp'},
       {url: '/waktu-sholat', title: 'Jadwal Sholat', icon: 'mdi-send', value: 'prayer'},
     ]
