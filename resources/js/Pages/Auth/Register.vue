@@ -3,9 +3,9 @@
   <Container>
     <template #content>
       <v-container>
-        <v-card-title>Pendaftaran Anggota</v-card-title>
+        <v-card-title>Pendataan Anggota</v-card-title>
         <v-card-text class="text-justify">
-          Demi terwujudnya tertib administrasi sesuai PD/PRT Gerakan Pemuda Ansor maka semua anggota GP Ansor Kecamatan Argomulyo diharapkan untuk segera mengisi formulir pendaftaran di bawah.
+          Demi terwujudnya tertib administrasi sesuai PD/PRT Gerakan Pemuda Ansor maka semua anggota GP Ansor Kecamatan Argomulyo diharapkan untuk segera mengisi formulir pendataan di bawah.
         </v-card-text>
         <v-sheet class="d-flex justify-center mx-2">
           <v-sheet v-if="form.id===null" width="500">
