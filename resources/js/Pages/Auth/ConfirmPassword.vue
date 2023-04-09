@@ -22,28 +22,17 @@ const submit = () => {
         <Head title="Confirm Password" />
 
         <div class="mb-4 text-sm text-gray-600">
-            This is a secure area of the application. Please confirm your password before continuing.
+          Ini adalah area terbatas. Harap konfirmasi kata sandi Anda sebelum melanjutkan.
         </div>
 
         <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="password" value="Password" />
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                    autocomplete="current-password"
-                    autofocus
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+          <v-text-field density="comfortable" label="Password" v-model="form.password" required autofocus autocomplete="current-password" type="password"
+          :error-messages="form.errors.password"
+          />
+
 
             <div class="flex justify-end mt-4">
-                <PrimaryButton class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Confirm
-                </PrimaryButton>
+              <v-btn color="teal" variant="flat" type="submit" :disabled="form.processing" :loading="form.processing">Konfirmasi</v-btn>
             </div>
         </form>
     </GuestLayout>
