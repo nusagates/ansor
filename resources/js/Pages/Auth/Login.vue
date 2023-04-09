@@ -3,7 +3,6 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import {reactive, ref} from "vue";
 import Toast from "@/Components/Toast.vue";
-
 const msg = ref();
 const success = ref(false)
 const form = reactive({
@@ -12,7 +11,6 @@ const form = reactive({
   remember: false,
 });
 const processing = ref(false)
-
 const submit = () => {
   processing.value = true
   axios.post('/login', form).then(res => {

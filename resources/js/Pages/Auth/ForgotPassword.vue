@@ -3,7 +3,6 @@ import GuestLayout from '@/Layouts/GuestLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import {reactive, ref} from "vue";
 import Toast from "@/Components/Toast.vue";
-
 const loading = ref(false)
 const status = ref(false)
 const form = reactive({

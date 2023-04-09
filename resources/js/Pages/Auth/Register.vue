@@ -246,12 +246,10 @@ import {Head} from "@inertiajs/vue3";
 import {computed, onMounted, onUnmounted, reactive, ref} from "vue";
 import {useLocalStorage} from "@vueuse/core";
 import Toast from "@/Components/Toast.vue";
-
 import "cropperjs/dist/cropper.min.css"
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import Container from "@/Components/Container.vue";
-
 const resetDialog = ref(false)
 let managements = ref([])
 const msg = ref(null)
@@ -324,7 +322,6 @@ const loading = reactive({
     store: false
   }
 })
-
 function selectProfile(event) {
   if (!(event && event.target)) return
   const {files} = event.target;
@@ -336,9 +333,7 @@ function selectProfile(event) {
     }
     reader.readAsDataURL(files[0])
   }
-
 }
-
 function selectKtp(event) {
   if (!(event && event.target)) return
   const {files} = event.target;
@@ -350,13 +345,10 @@ function selectKtp(event) {
     }
     reader.readAsDataURL(files[0])
   }
-
 }
-
 function pickCert(index) {
   fileCert.value[index].click()
 }
-
 function selectCert(event, index) {
   console.log(index)
   if (!(event && event.target)) return
@@ -369,9 +361,7 @@ function selectCert(event, index) {
     }
     reader.readAsDataURL(files[0])
   }
-
 }
-
 function storeUser() {
   if (form.value.id === null) {
     loading.user.store = true
@@ -389,29 +379,23 @@ function storeUser() {
     msg.value.show("Akun sudah terdaftar. Silahkan login")
   }
 }
-
 function cropProfileImage() {
   form.value.data.images.profile = profileImage.value.getCroppedCanvas().toDataURL()
   isCrop.value = false
 }
-
 function cropKtpImage() {
   form.value.data.images.ktp = ktpImage.value.getCroppedCanvas().toDataURL()
   isKtpCrop.value = false
 }
-
 function cropCertImage(index) {
-
   form.value.data.cadre_education[index].file = certImage.value[0].getCroppedCanvas().toDataURL()
   isCertCrop.value = null
 }
-
 function addCadreLevel() {
   fileCert.value = []
   certImage.value = []
   form.value.data.cadre_education.push({level: '', file: '', year: ''})
 }
-
 function removeCadreLevel(index) {
   form.value.data.cadre_education.splice(index, 1)
   //certImage.value.splice(index, 1)
@@ -419,7 +403,6 @@ function removeCadreLevel(index) {
   delete certImage.value[index]
   delete fileCert.value[index]
 }
-
 function resetData() {
   form.value = {
     id: null,

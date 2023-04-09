@@ -17,7 +17,6 @@ const props = defineProps({
     required: true,
   },
 });
-
 let errors = reactive([])
 const form = useForm({
   token: props.token,
@@ -25,7 +24,6 @@ const form = useForm({
   password: '',
   password_confirmation: '',
 });
-
 const submit = () => {
   loading.value = true
   axios.post(route('password.store'), form).then(res => {

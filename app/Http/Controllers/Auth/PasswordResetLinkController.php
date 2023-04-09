@@ -42,7 +42,7 @@ class PasswordResetLinkController extends Controller
         );
 
         if ($status == Password::RESET_LINK_SENT) {
-            return Responses::showSuccessMessage('ok',);
+          return Responses::showSuccessMessage('ok',);
         }
 
         throw ValidationException::withMessages([
