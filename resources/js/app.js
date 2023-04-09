@@ -17,6 +17,7 @@ import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 const vuetify = createVuetify({
     components,
     directives,
+    ssr: true,
 })
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Ansor Argomulyo';

@@ -16,6 +16,7 @@ import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 const vuetify = createVuetify({
     components,
     directives,
+    ssr: true,
 })
 
 const appName = 'GP Ansor Argomulyo';
