@@ -2,6 +2,7 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import {Head} from '@inertiajs/vue3';
 import {reactive, ref} from "vue";
+import Toast from "@/Components/Toast.vue";
 
 const loading = ref(false)
 const status = ref(false)
@@ -12,11 +13,12 @@ let errors = reactive([])
 const submit = () => {
   loading.value = true
   axios.post(route('password.email'), form)
-      .then(res=>{
+      .then(res => {
         status.value = true
-        loading.value=false
+        loading.value = false
       })
       .catch(er => {
+        console.log(er.response)
         errors = er.response.data.errors
         loading.value = false
       })
@@ -38,7 +40,5 @@ const submit = () => {
       </form>
     </v-sheet>
     <v-alert v-else title="Permintaan Diterima" text="Permintaan reset password telah diterima. Silahkan cek pesan masuk email Anda. Periksa folder spam jika tidak ada pesan masuk baru" color="success"/>
-
-
   </GuestLayout>
 </template>
