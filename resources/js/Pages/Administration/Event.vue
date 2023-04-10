@@ -16,41 +16,40 @@
         </template>
         <v-divider class="border-opacity-100"/>
         <v-card-text>
-          <v-timeline density="compact" align="start" truncate-line="both">
+          <v-timeline density="compact" align="start" truncate-line="start">
             <v-timeline-item
                 v-if="events!==null"
                 v-for="(event, index) of events.data"
                 :dot-color="index%2===0?'teal':'amber'"
                 size="x-small">
               <v-sheet>
-                <h2 v-text="event.name"/>
-                <small>
-                  <v-icon>mdi-account</v-icon>
-                  {{ event.organizer }}<br/>
-                  <v-icon>mdi-calendar</v-icon>
-                  <date-format :date="event.activity_date"/> &nbsp;
-                  <v-icon>mdi-clock-outline</v-icon>
-                  <time-format :time="event.started_at"/>
-                  <template v-if="event.finished_at!==null"> -
-                    <time-format :time="event.finished_at"/>
-                  </template>
-                  <br/>
-                  <v-icon>mdi-map-marker</v-icon>
-                  {{ event.venue }}<br/>
-                  <v-icon>mdi-bullhorn</v-icon>
-                  {{ event.is_public ? 'untuk Umum' : 'Kalangan Terbatas' }}
-                </small>
+                <h2 class="text-overline" v-text="event.name"/>
+                <v-sheet style="margin-left: -20px">
+                  <v-list-item density="compact" prepend-icon="mdi-account" class="text-body-2">{{ event.organizer }}</v-list-item>
+                  <v-list-item density="compact" prepend-icon="mdi-calendar" class="text-body-2">
+                    <date-format :date="event.activity_date"/> &nbsp;
+                    <v-icon>mdi-clock-outline</v-icon>
+                    <time-format :time="event.started_at"/>
+                    <template v-if="event.finished_at!==null"> -
+                      <time-format :time="event.finished_at"/>
+                    </template>
+                  </v-list-item>
+                  <v-list-item density="compact" prepend-icon="mdi-map-marker" class="text-body-2">{{ event.venue }}</v-list-item>
+                  <v-list-item density="compact" prepend-icon="mdi-bullhorn" class="text-body-2">{{ event.is_public ? 'untuk Umum' : 'Kalangan Terbatas' }}</v-list-item>
+                  <v-sheet class="ml-8">
+                    <auth can="Update Event">
+                      <v-btn @click="editEvent(event)" density="compact" variant="text" icon>
+                        <v-icon>mdi-square-edit-outline</v-icon>
+                      </v-btn>
+                    </auth>
+                    <auth can="Delete Event">
+                      <v-btn @click="form.event=event;dialog.event.delete=true" density="compact" variant="text" icon>
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                    </auth>
+                  </v-sheet>
+                </v-sheet>
               </v-sheet>
-              <auth can="Update Event">
-                <v-btn @click="editEvent(event)" density="compact" variant="text" icon>
-                  <v-icon>mdi-square-edit-outline</v-icon>
-                </v-btn>
-              </auth>
-              <auth can="Delete Event">
-                <v-btn @click="form.event=event;dialog.event.delete=true" density="compact" variant="text" icon>
-                  <v-icon>mdi-delete</v-icon>
-                </v-btn>
-              </auth>
             </v-timeline-item>
           </v-timeline>
           <v-sheet class="d-flex justify-center">
@@ -223,6 +222,9 @@ const deleteEvent = () => {
 getEvents()
 </script>
 
-<style scoped>
-
+<style>
+.v-list-item__prepend > .v-icon{
+  -webkit-margin-end: 2px;
+  margin-inline-end: 2px;
+}
 </style>
