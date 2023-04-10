@@ -24,7 +24,9 @@ class RolePermissionSeeder extends Seeder
       $permissions = Permission::firstOrCreate(['name' => $item]);
       $role->givePermissionTo($permissions);
     }
-    $user = User::find(5);
-    $user->assignRole($role);
+    $user = User::find(1);
+   if($user){
+     $user->assignRole($role);
+   }
   }
 }
