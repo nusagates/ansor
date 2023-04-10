@@ -33,6 +33,7 @@
                     <template v-if="event.finished_at!==null"> -
                       <time-format :time="event.finished_at"/>
                     </template>
+                    WIB
                   </v-list-item>
                   <v-list-item density="compact" prepend-icon="mdi-map-marker" class="text-body-2">{{ event.venue }}</v-list-item>
                   <v-list-item density="compact" prepend-icon="mdi-bullhorn" class="text-body-2">{{ event.is_public ? 'untuk Umum' : 'Kalangan Terbatas' }}</v-list-item>
