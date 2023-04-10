@@ -33,7 +33,7 @@
 <script setup>
 
 import {Head} from "@inertiajs/vue3";
-import {onMounted, reactive, ref} from "vue";
+import {reactive, ref} from "vue";
 import Toast from "@/Components/Toast.vue";
 import Container from "@/Components/Container.vue";
 

@@ -15,7 +15,7 @@ defineProps(['type'])
 let today = ref(new Date())
 setInterval(() => {
   today.value = new Date()
-}, 1000)
+}, 1000*60)
 </script>
 
 <style scoped>

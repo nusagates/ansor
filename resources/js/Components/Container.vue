@@ -117,7 +117,7 @@ const menuItem = reactive([
   {
     url: '#', title: 'Administrasi', icon: 'mdi-file-document-multiple', value: 'admin', children: [
       {url: '#', title: 'Data Anggota', icon: 'mdi-email', value: 'member'},
-      {url: '#', title: 'Jadwal Kegiatan', icon: 'mdi-email', value: 'agenda'},
+      {url: '/event', title: 'Jadwal Kegiatan', icon: 'mdi-email', value: 'agenda'},
       {url: '#', title: 'Dokumentasi Kegiatan', icon: 'mdi-send', value: 'documentation'},
       {url: '#', title: 'Daftar Hadir', icon: 'mdi-send', value: 'attendance'},
       {url: '#', title: 'Buku Tamu', icon: 'mdi-send', value: 'guest-book'},
