@@ -250,7 +250,7 @@ import "cropperjs/dist/cropper.min.css"
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import Container from "@/Components/Container.vue";
-const resetDialog = ref(false)
+let resetDialog = ref(false)
 let managements = ref([])
 const msg = ref(null)
 const profileImage = ref();

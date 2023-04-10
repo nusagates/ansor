@@ -61,28 +61,38 @@ class UserController extends Controller
     return Responses::showSuccessMessage('Data berhasil disimpan', $user);
   }
 
-  /**
-   * Display the specified resource.
-   */
-  public function show(string $id)
-  {
-    //
-  }
 
-  /**
-   * Show the form for editing the specified resource.
-   */
-  public function edit(string $id)
-  {
-    //
-  }
 
   /**
    * Update the specified resource in storage.
    */
-  public function update(Request $request, string $id)
+  public function update(Request $request, User $user)
   {
-    //
+    $rules = [
+      'management_id'         => 'required|integer|exists:management,id',
+      'nik'                   => 'required|string|unique:users,nik,'.$user->id,
+      'name'                  => 'required|string',
+      'phone'                 => 'required|string|unique:users,phone,'.$user->id,
+      'email'                 => 'required|email|unique:users,email,'.$user->id,
+      'is_banser'             => 'required|boolean',
+      'meta'                  => 'required|array'
+    ];
+    $validator = Validator::make($request->post(), $rules);
+    if ($validator->fails()) {
+      return Responses::showValidationError($validator);
+    }
+    $user->update([
+      'management_id' => $request->management_id,
+      'nik'           => $request->nik,
+      'name'          => $request->name,
+      'phone'         => $request->phone,
+      'email'         => $request->email,
+      'is_banser'     => $request->is_banser,
+      'member_number' => $request->member_number,
+      'meta'          => $request->meta
+    ]);
+
+    return Responses::showSuccessMessage('Data berhasil disimpan', $user);
   }
 
   /**

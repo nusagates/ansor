@@ -27,15 +27,15 @@
             <digital-clock type="date"/>&nbsp;
             <digital-clock type="time"/>
           </v-sheet>
-          <template v-if="user===null">
-            <v-btn href="/register" prepend-icon="mdi-account" value="register">Daftar</v-btn>
-            <v-btn href="/login" prepend-icon="mdi-login" value="login">Masuk</v-btn>
-          </template>
         </template>
-        <v-avatar class="mx-2 d-none d-sm-flex" v-if="user!==null">
+        <v-avatar class="mx-2" v-if="user!==null">
           <v-img :src="user.meta.images.profile"/>
           <v-menu activator="parent" location="bottom">
             <v-list density="compact" nav>
+              <v-list-item href="/dashboard" value="profile">
+                <v-icon>mdi-tablet-dashboard</v-icon>
+                Dashboard
+              </v-list-item>
               <v-list-item href="/profile" value="profile">
                 <v-icon>mdi-account</v-icon>
                 Profil
@@ -47,11 +47,9 @@
             </v-list>
           </v-menu>
         </v-avatar>
-        <template class="d-flex d-sm-none mx-2">
-        <v-sheet class="text-center px-1" rounded>
-          <digital-clock type="date"/>&nbsp;
-          <digital-clock type="time"/>
-        </v-sheet>
+        <template v-else>
+          <v-btn href="/register" value="register"><v-icon>mdi-account</v-icon>Daftar</v-btn>
+          <v-btn href="/login" value="login"><v-icon>mdi-login</v-icon>Masuk</v-btn>
         </template>
       </v-toolbar>
       <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -78,20 +76,6 @@
               </v-list-group>
             </template>
           </template>
-          <template v-if="user===null">
-            <v-list-item href="/register" value="register">
-              <v-icon>mdi-account</v-icon>
-              Daftar
-            </v-list-item>
-            <v-list-item href="/login" value="login">
-              <v-icon>mdi-login</v-icon>
-              Masuk
-            </v-list-item>
-          </template>
-          <v-list-item v-else @click="logoutDialog=true" class="text-red" value="logout">
-            <v-icon>mdi-logout</v-icon>
-            Keluar
-          </v-list-item>
         </v-list>
       </v-navigation-drawer>
     </v-sheet>
