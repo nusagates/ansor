@@ -1,10 +1,12 @@
 <template>
   <v-app>
 
-    <v-sheet class="d-flex justify-center my-3">
-      <v-img max-width="320" src="/assets/images/horizontal_logo.webp"/>
+    <v-sheet  v-if="showNav" class="d-flex justify-center my-3">
+      <a href="/">
+        <v-img width="320" src="/assets/images/horizontal_logo.webp"/>
+      </a>
     </v-sheet>
-    <v-sheet class="my-2">
+    <v-sheet  v-if="showNav" class="mb-2">
       <v-toolbar density="compact" color="teal">
         <v-btn class="d-flex d-sm-none" @click="drawer=!drawer" icon>
           <v-icon>mdi-menu</v-icon>
@@ -48,8 +50,14 @@
           </v-menu>
         </v-avatar>
         <template v-else>
-          <v-btn href="/register" value="register"><v-icon>mdi-account</v-icon>Daftar</v-btn>
-          <v-btn href="/login" value="login"><v-icon>mdi-login</v-icon>Masuk</v-btn>
+          <v-btn href="/register" value="register">
+            <v-icon>mdi-account</v-icon>
+            Daftar
+          </v-btn>
+          <v-btn href="/login" value="login">
+            <v-icon>mdi-login</v-icon>
+            Masuk
+          </v-btn>
         </template>
       </v-toolbar>
       <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -104,6 +112,12 @@ import Toast from "@/Components/Toast.vue";
 import {usePage} from '@inertiajs/vue3';
 import DigitalClock from "@/Components/DigitalClock.vue";
 
+defineProps({
+  showNav: {
+    default: true,
+    type: Boolean
+  }
+})
 const user = usePage().props.auth.user;
 const msg = ref()
 const processing = reactive({
@@ -116,7 +130,7 @@ const menuItem = reactive([
   {url: '/', title: 'Beranda', icon: 'mdi-home', value: 'home', children: null, show: true},
   {
     url: '#', title: 'Administrasi', icon: 'mdi-file-document-multiple', value: 'admin', children: [
-      {url: '#', title: 'Data Anggota', icon: 'mdi-email', value: 'member'},
+      {url: '/member', title: 'Data Anggota', icon: 'mdi-email', value: 'member'},
       {url: '/event', title: 'Jadwal Kegiatan', icon: 'mdi-email', value: 'agenda'},
       {url: '#', title: 'Dokumentasi Kegiatan', icon: 'mdi-send', value: 'documentation'},
       {url: '#', title: 'Daftar Hadir', icon: 'mdi-send', value: 'attendance'},
