@@ -1,6 +1,6 @@
 <template>
-  <Head title="Jadwal Kegiatan"/>
-  <container>
+  <Head v-if="showTitle" title="Jadwal Kegiatan"/>
+  <container :show-nav="showNav">
     <template #content>
       <v-card flat>
         <template #title>
@@ -124,6 +124,16 @@ import TimeFormat from "@/Components/TimeFormat.vue";
 import Pagination from "@/Components/Pagination.vue";
 import Auth from "@/Components/Auth.vue";
 
+defineProps({
+  showNav: {
+    default: true,
+    type: Boolean
+  },
+  showTitle: {
+    default: true,
+    type: Boolean
+  }
+})
 const msg = ref()
 const events = ref(null)
 const dialog = reactive({
@@ -224,7 +234,7 @@ getEvents()
 </script>
 
 <style>
-.v-list-item__prepend > .v-icon{
+.v-list-item__prepend > .v-icon {
   -webkit-margin-end: 2px;
   margin-inline-end: 2px;
 }

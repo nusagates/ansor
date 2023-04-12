@@ -1,1 +1,0 @@
-import{j as r,a,u as e,F as t,o,X as s}from"./app-211a5b60.js";import m from"./Event-c610b143.js";import"./Container-333b1ddc.js";import"./Toast.vue_vue_type_script_setup_true_lang-0df0ee19.js";import"./_plugin-vue_export-helper-c27b6911.js";const d={__name:"Dashboard",setup(n){return(c,p)=>(o(),r(t,null,[a(e(s),{title:"Dashboard"}),a(m)],64))}};export{d as default};

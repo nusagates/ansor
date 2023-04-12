@@ -36,4 +36,7 @@ class User extends Authenticatable
     'status'            => 'string',
     'phone'             => 'string',
   ];
+  public function management(){
+    return $this->belongsTo(Management::class);
+  }
 }

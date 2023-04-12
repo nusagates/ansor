@@ -14,10 +14,10 @@ import * as directives from 'vuetify/directives'
 import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
+
 const vuetify = createVuetify({
     components,
-    directives,
-    ssr: true,
+    directives
 })
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Ansor Argomulyo';

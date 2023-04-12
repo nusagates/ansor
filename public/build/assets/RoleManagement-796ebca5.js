@@ -1,1 +1,0 @@
-import{_ as t}from"./_plugin-vue_export-helper-c27b6911.js";import{c as o,w as n,r as c,o as r,d as s}from"./app-211a5b60.js";const a={};function _(f,l){const e=c("v-sheet");return r(),o(e,null,{default:n(()=>[s("hh")]),_:1})}const d=t(a,[["render",_]]);export{d as default};

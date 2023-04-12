@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ManagementController;
+use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -21,11 +22,13 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-  return Inertia::render('PrayerTime', [
+  return Inertia::render('Administration/Event', [
     'canLogin'       => Route::has('login'),
     'canRegister'    => Route::has('register'),
     'laravelVersion' => Application::VERSION,
     'phpVersion'     => PHP_VERSION,
+    'showTitle'      => true,
+    'showNav'        => true
   ]);
 });
 
@@ -46,14 +49,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::resource('management', ManagementController::class);
 Route::resource('user', UserController::class);
-Route::middleware('auth')->group(function () {
+Route::get('/event', [EventController::class, 'index']);
+Route::middleware(['auth', 'verified'])->group(function () {
+  Route::resource('/profile', ProfileController::class)->only(['update', 'destroy']);
   Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
   Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
   Route::resources([
-    'event' => EventController::class,
-    'role' => RoleController::class
+    'role'   => RoleController::class,
+    'member' => MemberController::class,
   ], ['except' => ['create', 'edit', 'show']]);
+  Route::resources([
+    'event' => EventController::class
+  ], ['except' => ['create', 'edit', 'show', 'index']]);
 });
 
 require __DIR__ . '/auth.php';
