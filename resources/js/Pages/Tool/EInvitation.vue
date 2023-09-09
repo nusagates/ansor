@@ -7,7 +7,6 @@
           <v-toolbar-title>Undangan Elektronik</v-toolbar-title>
           <v-spacer/>
           <v-toolbar-items>
-
             <v-btn @click="resetData" variant="flat" color="teal">Reset Data</v-btn>
           </v-toolbar-items>
         </v-toolbar>
